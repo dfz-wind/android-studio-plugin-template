@@ -1,0 +1,38 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+// 使用环境变量内的已知路径，计算相对路径获取AndroidStudio的app主目录Contents
+// jnidispatch.path=/Applications/Android Studio.app/Contents/lib/jna/aarch64/libjnidispatch.jnilib
+def Contents = project.file(System.getProperty("jnidispatch.path"))
+        .parentFile
+        .parentFile
+        .parentFile
+        .parentFile
+// 获取环境目录currentStudioSelect
+// jb.vmOptionsFile=/Users/dfz/Library/Application Support/Google/AndroidStudio2024.2/studio.vmoptions
+def currentStudioSelect = project.file(System.getProperty("jb.vmOptionsFile")).parentFile
+
+println("Contents:${Contents}")
+println("currentStudioSelect:${currentStudioSelect}")
+
+compileJava {
+    options.fork = true
+    // 指定编译版本，要与AndroidStudio的版本一致，否则会因为jdk版本不一致编译失败
+    options.forkOptions.javaHome = new File("${Contents}/jbr/Contents/Home")
+}
+
+
+jar {
+    archiveName "dfz-test-plugin.jar"
+    doLast {
+        // 拷贝到插件目录，直接更新插件。disable再enable可以直接更新
+        copy {
+            from("build/libs/$archiveName")
+            into("${currentStudioSelect}/plugins")
+        }
+    }
+}
+
+dependencies {
+    // 导入as所依赖的jar包，包含idea的AnAction等，编译且方便查看代码
+    compileOnly fileTree("${Contents}/lib/")
+}

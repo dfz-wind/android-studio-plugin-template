@@ -1,0 +1,33 @@
+<idea-plugin require-restart="false">
+    <name>Dfz Test</name>
+    <version>1.0</version>
+    <vendor>dfz</vendor>
+    <!--    插件的描述信息-->
+    <description>只是用来测试的插件，并无实际需要描述的内容！！！！！！！！！！！！！！！！！！！</description>
+
+    <!--    插件的变更日志，显示在插件管理器-->
+    <change-notes>
+        first version
+    </change-notes>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="242.23339.11" />
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+    <application-components />
+    <project-components />
+    <!--    插件的action-->
+    <actions>
+        <action class="com.dfz.plugin.DfzAction" text="Dfz 测试">
+            <!--   右键-->
+            <add-to-group anchor="last" group-id="CodeMenu" />
+        </action>
+    </actions>
+    <!--    插件扩展点，用于添加插件的功能-->
+    <extensions defaultExtensionNs="com.intellij">
+        <!--        通知组，用于显示通知,输出日志-->
+        <notificationGroup displayType="BALLOON" id="dfz" isLogByDefault="true" />
+    </extensions>
+
+</idea-plugin>
