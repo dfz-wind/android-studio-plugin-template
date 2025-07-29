@@ -21,7 +21,7 @@
     <actions>
         <action class="com.dfz.plugin.DfzAction" text="Dfz 测试">
             <!--   右键-->
-            <add-to-group anchor="last" group-id="CodeMenu" />
+            <add-to-group anchor="last" group-id="EditorPopupMenu" />
         </action>
     </actions>
     <!--    插件扩展点，用于添加插件的功能-->
